@@ -1,0 +1,78 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header divCorAzul">
+                        <a>Cadastro de Fornecedores - Enaplic<button (click)="exportExcel('Forneces', 'Fornece')"
+                                mat-raised-button type="button" matTooltip="Exporta Excel"
+                                [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                <span class="material-icons">
+                                    file_download
+                                </span>
+                            </button></a>
+                        <!-- <h4 class="card-title">RELAÇÃO DE ORDENS DE PRODUÇÃO</h4> -->
+                        <!-- <p class="card-category">New employees on 15th September, 2016</p> -->
+                    </div>
+
+                    <div class="card-body table-responsive">
+                        <mat-form-field>
+                            <mat-label>Filtro</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Filtro de Fornece" #input>
+                        </mat-form-field>
+
+                        <div class="mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource" matSort>
+                                <ng-container matColumnDef="seq">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Seq </th>
+                                    <td *matCellDef='let row' mat-cell> {{row.seq}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="cod">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.cod}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="loja">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.loja}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="nome">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> nome </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="nreduz">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> nreduz </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.nreduz}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="cnpj">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> cnpj </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.cnpj}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="cidade">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> cidade </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.cidade}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="edicao">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Enviar </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button (click)="confirmaOp(row)" mat-raised-button type="button"
+                                            matTooltip="Enviar para Atualização" [matTooltipPosition]="'above'"
+                                            class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                            <i class="material-icons md-48">verified</i>
+                                        </button>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                </tr>
+                            </table>
+
+                            <mat-paginator [pageSizeOptions]="[12, 25, 50]"></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
