@@ -26,10 +26,15 @@ export interface cadMontalista {
 
 export class MontalistaComponent implements OnInit {
   arrUserLogado = JSON.parse(localStorage.getItem('user'))[0];
+  arrFornecDados = JSON.parse(localStorage.getItem('fornecDados'))[0];
   arrMontalista: any = [];
   arrMontalistaTab: any = [];
+  arrGrupoPrd: any = [];
+  arrGrupoPrdTab: any = [];
   enableEditIndex = null;
-
+  grupoSelec: string = '';
+  grupoProd: string = '';
+  itensSelec: any;
 
   ftuprecos: Observable<any>;
   displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
@@ -45,14 +50,57 @@ export class MontalistaComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscaMontalistas();
+    this.buscaGrupos();
+  }
+
+  buscaGrupos() {
+    const obj = {
+      '': ''
+    };
+    this.arrGrupoPrd = this.funcJson.buscaJsonPost('cadGrupoProdutos', obj);
+
+    this.arrGrupoPrd.subscribe(cada => {
+      cada.forEach(xy => {
+        this.arrGrupoPrdTab.push({
+          'grupo': xy.grupo,
+          'descricao': xy.descricao,
+          'qtde': xy.qtde,
+          'lista': xy.lista,
+        })
+      });
+    });
+  }
+
+  atuLista() {
+
+    if (this.grupoSelec === '') {
+      this.grupoSelec = this.grupoProd
+    } else {
+
+      if (this.grupoSelec.indexOf(this.grupoProd) < 0) {
+        this.grupoSelec = this.grupoSelec + ' - ' + this.grupoProd
+      } else {
+        if (this.grupoSelec.indexOf(' - ' + this.grupoProd) > -1) {
+          this.grupoSelec = this.grupoSelec.replace(' - ' + this.grupoProd, '')
+        } else {
+          this.grupoSelec = this.grupoSelec.replace(this.grupoProd, '')
+        }
+      }
+    }
+    if (this.grupoSelec.substring(0, 1) === ' ') {
+      this.grupoSelec = this.grupoSelec.substring(3, 101)
+    }
+
+    this.arrMontalistaTab = [];
+    this.buscaMontalistas();
   }
 
   buscaMontalistas() {
     let seq = 0;
     const obj = {
-      'codFor': '001992',
-      'codLoja': '01',
-      'codGrupo': '202',
+      'codFor': this.arrFornecDados.cod,
+      'codLoja': this.arrFornecDados.loja,
+      'codGrupo': this.grupoSelec,
     };
     this.arrMontalista = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
 
@@ -73,11 +121,13 @@ export class MontalistaComponent implements OnInit {
           'preco': xy.preco,
           'diaenv': xy.diaenv,
           'horenv': xy.horenv,
+          'idcod': xy.idcod,
         })
       });
       this.dataSource = new MatTableDataSource(this.arrMontalistaTab)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.itensSelec = seq + ' Selecionados'
     });
   }
 

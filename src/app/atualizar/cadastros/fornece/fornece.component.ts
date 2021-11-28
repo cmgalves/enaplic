@@ -96,7 +96,7 @@ export class ForneceComponent implements OnInit {
 
   montaEnvio(xcRow) {
     const aFornec = this.arrForneceTab.filter(x => x.cod == xcRow.cod && x.loja == xcRow.loja);
-    localStorage.setItem('op', JSON.stringify(aFornec));
+    localStorage.setItem('fornecDados', JSON.stringify(aFornec));
     console.log(aFornec);
     // this.atuOP(aFornec[0].FILIAL, aFornec[0].OP)
     this.router.navigate(['montalista']);
