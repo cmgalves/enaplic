@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
 import { fxJson } from 'app/shared/funcs/funcs';
 
 // tslint:disable-next-line:class-name
-export interface cadFornece {
+export interface cadMontalista {
   empresa: string;
   nome: string;
   email: string;
@@ -19,20 +19,21 @@ export interface cadFornece {
 }
 
 @Component({
-  selector: 'app-Fornece',
-  templateUrl: './Fornece.component.html',
-  styleUrls: ['./Fornece.component.css']
+  selector: 'app-Montalista',
+  templateUrl: './Montalista.component.html',
+  styleUrls: ['./Montalista.component.css']
 })
 
-export class ForneceComponent implements OnInit {
+export class MontalistaComponent implements OnInit {
   arrUserLogado = JSON.parse(localStorage.getItem('user'))[0];
-  arrFornece: any = [];
-  arrForneceTab: any = [];
+  arrMontalista: any = [];
+  arrMontalistaTab: any = [];
+  enableEditIndex = null;
 
 
-  forneces: Observable<any>;
-  displayedColumns: string[] = ['seq', 'cod', 'loja', 'nome', 'cnpj', 'edicao'];
-  dataSource: MatTableDataSource<cadFornece>;
+  ftuprecos: Observable<any>;
+  displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
+  dataSource: MatTableDataSource<cadMontalista>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   class: string = '';
@@ -43,34 +44,38 @@ export class ForneceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.buscaForneces();
+    this.buscaMontalistas();
   }
 
-  buscaForneces() {
+  buscaMontalistas() {
     let seq = 0;
     const obj = {
-      'Fornece': ''
+      'codFor': '001992',
+      'codLoja': '01',
+      'codGrupo': '202',
     };
-    this.arrFornece = this.funcJson.buscaJsonPost('cadFornecedores', obj);
+    this.arrMontalista = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
 
-    this.arrFornece.subscribe(cada => {
+    this.arrMontalista.subscribe(cada => {
       cada.forEach(xy => {
         seq++
-        this.arrForneceTab.push({
+        this.arrMontalistaTab.push({
           'seq': seq,
+          'origem': xy.origem,
+          'filial': xy.filial,
           'cod': xy.cod,
           'loja': xy.loja,
           'nome': xy.nome,
-          'nreduz': xy.nreduz,
-          'cnpj': xy.cnpj,
-          'cidade': xy.cidade,
-          // ['filial', 'cod', 'loja', 'nome', 'nreduz', 'cnpj', 'cidade'];
+          'grupo': xy.grupo,
+          'produto': xy.produto,
+          'nomproduto': xy.nomproduto,
+          'codfor': xy.codfor,
+          'preco': xy.preco,
+          'diaenv': xy.diaenv,
+          'horenv': xy.horenv,
         })
-
       });
-
-
-      this.dataSource = new MatTableDataSource(this.arrForneceTab)
+      this.dataSource = new MatTableDataSource(this.arrMontalistaTab)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -93,13 +98,17 @@ export class ForneceComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  montaEnvio(xcRow) {
-    const aFornec = this.arrForneceTab.filter(x => x.cod == xcRow.cod && x.loja == xcRow.loja);
-    localStorage.setItem('op', JSON.stringify(aFornec));
-    console.log(aFornec);
-    // this.atuOP(aFornec[0].FILIAL, aFornec[0].OP)
-    this.router.navigate(['montalista']);
+  enableEditUser(e, i) {
+    this.enableEditIndex = i;
+    // (<HTMLInputElement>(document.getElementById("editQtd"))).focus()
+    console.log(i, e)
+  }
+  btnEditDisable(aRow) {
+    return aRow.SITUACA === 'A'
+  }
+  // tecla para retorno de tela
+  voltaFornec() {
+    this.router.navigate(['fornecedor']);
   }
 
 

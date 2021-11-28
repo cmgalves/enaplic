@@ -28,10 +28,11 @@ export class AtuprecoComponent implements OnInit {
   arrUserLogado = JSON.parse(localStorage.getItem('user'))[0];
   arrAtupreco: any = [];
   arrAtuprecoTab: any = [];
+  enableEditIndex = null;
 
 
   ftuprecos: Observable<any>;
-  displayedColumns: string[] = ['seq', 'cod', 'loja', 'nome', 'cnpj', 'edicao'];
+  displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
   dataSource: MatTableDataSource<cadAtupreco>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -49,27 +50,31 @@ export class AtuprecoComponent implements OnInit {
   buscaAtuprecos() {
     let seq = 0;
     const obj = {
-      'Atupreco': ''
+      'codFor': '001992',
+      'codLoja': '01',
+      'codGrupo': '202',
     };
-    this.arrAtupreco = this.funcJson.buscaJsonPost('cadAtuprecodores', obj);
+    this.arrAtupreco = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
 
     this.arrAtupreco.subscribe(cada => {
       cada.forEach(xy => {
         seq++
         this.arrAtuprecoTab.push({
           'seq': seq,
+          'origem': xy.origem,
+          'filial': xy.filial,
           'cod': xy.cod,
           'loja': xy.loja,
           'nome': xy.nome,
-          'nreduz': xy.nreduz,
-          'cnpj': xy.cnpj,
-          'cidade': xy.cidade,
-          // ['filial', 'cod', 'loja', 'nome', 'nreduz', 'cnpj', 'cidade'];
+          'grupo': xy.grupo,
+          'produto': xy.produto,
+          'nomproduto': xy.nomproduto,
+          'codfor': xy.codfor,
+          'preco': xy.preco,
+          'diaenv': xy.diaenv,
+          'horenv': xy.horenv,
         })
-
       });
-
-
       this.dataSource = new MatTableDataSource(this.arrAtuprecoTab)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -92,6 +97,18 @@ export class AtuprecoComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  enableEditUser(e, i) {
+    this.enableEditIndex = i;
+    // (<HTMLInputElement>(document.getElementById("editQtd"))).focus()
+    console.log(i, e)
+  }
+  btnEditDisable(aRow) {
+    return aRow.SITUACA === 'A'
+  }
+  // tecla para retorno de tela
+  voltaFornec() {
+    this.router.navigate(['fornecedor']);
   }
 
 

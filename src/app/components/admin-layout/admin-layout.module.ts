@@ -24,6 +24,8 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ProdutoComponent } from 'app/atualizar/cadastros/produto/produto.component';
 import { EstruturaComponent } from 'app/atualizar/cadastros/estrutura/estrutura.component';
 import { ForneceComponent } from 'app/atualizar/cadastros/fornece/fornece.component';
+import { AtuprecoComponent } from 'app/atualizar/compras/atupreco/atupreco.component';
+import { MontalistaComponent } from 'app/atualizar/compras/montalista/montalista.component';
 
 
 @NgModule({
@@ -50,6 +52,8 @@ import { ForneceComponent } from 'app/atualizar/cadastros/fornece/fornece.compon
     ForgotPasswordComponent,
     UsuarioComponent,
     ProdutoComponent,
+    AtuprecoComponent,
+    MontalistaComponent,
     EstruturaComponent,
   ]
 })

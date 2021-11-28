@@ -8,6 +8,8 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { EstruturaComponent } from 'app/atualizar/cadastros/estrutura/estrutura.component';
 import { ProdutoComponent } from 'app/atualizar/cadastros/produto/produto.component';
 import { ForneceComponent } from 'app/atualizar/cadastros/fornece/fornece.component';
+import { AtuprecoComponent } from 'app/atualizar/compras/atupreco/atupreco.component';
+import { MontalistaComponent } from 'app/atualizar/compras/montalista/montalista.component';
 
 export const AdminLayoutRoutes: Routes = [
 
@@ -16,8 +18,10 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'fornecedor', component: ForneceComponent, canActivate: [AuthGuard] },
     { path: 'usuario', component: UsuarioComponent, canActivate: [AuthGuard] },
     { path: 'produto', component: ProdutoComponent, canActivate: [AuthGuard] },
+    { path: 'montalista', component: MontalistaComponent, canActivate: [AuthGuard] },
+    { path: 'atupreco', component: AtuprecoComponent, canActivate: [AuthGuard] },
     { path: 'estrutura', component: EstruturaComponent, canActivate: [AuthGuard] },
-
+    
 ];
 
 

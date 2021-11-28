@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/modelo_antigo
 # /apache
 # /documentation
 # /node
