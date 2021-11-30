@@ -29,6 +29,7 @@ export class MontalistaComponent implements OnInit {
   arrFornecDados = JSON.parse(localStorage.getItem('fornecDados'))[0];
   arrMontalista: any = [];
   arrMontalistaTab: any = [];
+  arrAtulista: any = [];
   arrGrupoPrd: any = [];
   arrGrupoPrdTab: any = [];
   enableEditIndex = null;
@@ -37,7 +38,7 @@ export class MontalistaComponent implements OnInit {
   itensSelec: any;
 
   ftuprecos: Observable<any>;
-  displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
+  displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'idcod'];
   dataSource: MatTableDataSource<cadMontalista>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -49,8 +50,34 @@ export class MontalistaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.arrUserLogado.login === 'FOR') {
+      alert('Sem Acesso')
+      this.router.navigate(['sign-in']);
+    }
     this.buscaMontalistas();
     this.buscaGrupos();
+  }
+
+  envLista(){
+    let tst = [];
+    const obj = {
+      'codFor': this.arrFornecDados.cod,
+      'codLoja': this.arrFornecDados.loja,
+      'codGrupo': this.grupoSelec,
+      'tipo': 'B',
+    };
+    this.arrAtulista = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
+    this.arrAtulista.subscribe(cada => {
+      cada.forEach(xy => {
+        tst.push({
+          'grupo': 'xy.grupo',
+        })
+      });
+      this.arrMontalistaTab = [];
+      this.buscaMontalistas();
+      alert('Envio OK!')
+    });
+    
   }
 
   buscaGrupos() {
@@ -101,6 +128,7 @@ export class MontalistaComponent implements OnInit {
       'codFor': this.arrFornecDados.cod,
       'codLoja': this.arrFornecDados.loja,
       'codGrupo': this.grupoSelec,
+      'tipo': 'A',
     };
     this.arrMontalista = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
 

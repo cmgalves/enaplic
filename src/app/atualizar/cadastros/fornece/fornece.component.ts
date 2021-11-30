@@ -43,6 +43,10 @@ export class ForneceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.arrUserLogado.login === 'FOR') {
+      alert('Sem Acesso')
+      this.router.navigate(['sign-in']);
+    }
     this.buscaForneces();
   }
 

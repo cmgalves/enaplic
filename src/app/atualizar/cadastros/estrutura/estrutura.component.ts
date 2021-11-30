@@ -42,11 +42,9 @@ export class EstruturaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.arrUserLogado.perfil === 'Administrador') {
-      this.buscaEstruturas();
-    } else {
+    if (this.arrUserLogado.login === 'FOR') {
       alert('Sem Acesso')
-      this.router.navigate(['opResumo']);
+      this.router.navigate(['sign-in']);
     }
   }
 

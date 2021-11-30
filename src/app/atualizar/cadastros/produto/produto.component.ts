@@ -38,7 +38,11 @@ export class ProdutoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.buscaProdutos();
+    if (this.arrUserLogado.login === 'FOR') {
+      alert('Sem Acesso')
+      this.router.navigate(['sign-in']);
+    }
+    this.buscaProdutos();
   }
 
   buscaProdutos() {
@@ -61,10 +65,10 @@ export class ProdutoComponent implements OnInit {
           'segunda': xy.segunda,
           'ncm': xy.ncm,
         })
-  
+
       });
-      
-  
+
+
       this.dataSource = new MatTableDataSource(this.arrProdutoTab)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -79,7 +83,7 @@ export class ProdutoComponent implements OnInit {
     XLSX.utils.book_append_sheet(workBook, workSheet, sn);
     XLSX.writeFile(workBook, fn);
   }
-  
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

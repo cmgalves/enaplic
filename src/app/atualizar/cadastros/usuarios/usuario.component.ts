@@ -56,7 +56,11 @@ export class UsuarioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.buscaUsuarios();
+    if (this.arrUserLogado.login === 'FOR') {
+      alert('Sem Acesso')
+      this.router.navigate(['sign-in']);
+    }
+    this.buscaUsuarios();
   }
 
 

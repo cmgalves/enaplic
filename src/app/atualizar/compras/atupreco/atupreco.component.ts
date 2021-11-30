@@ -28,11 +28,16 @@ export class AtuprecoComponent implements OnInit {
   arrUserLogado = JSON.parse(localStorage.getItem('user'))[0];
   arrAtupreco: any = [];
   arrAtuprecoTab: any = [];
+  arrUsr: any = [];
   enableEditIndex = null;
-
+  idCod = location.hash.substring(18);
+  codFor: string = '';
+  lojaFor: string = '';
+  nomeFor: string = '';
 
   ftuprecos: Observable<any>;
-  displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
+  // displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
+  displayedColumns: string[] = ['seq', 'produto', 'nomeprod', 'preco', 'codfor', 'edicao'];
   dataSource: MatTableDataSource<cadAtupreco>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -50,29 +55,31 @@ export class AtuprecoComponent implements OnInit {
   buscaAtuprecos() {
     let seq = 0;
     const obj = {
-      'codFor': '001992',
-      'codLoja': '01',
-      'codGrupo': '202',
+      'codId': this.idCod,
     };
-    this.arrAtupreco = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
+    this.arrAtupreco = this.funcJson.buscaJsonPost('listaProdFornecedores', obj);
 
     this.arrAtupreco.subscribe(cada => {
       cada.forEach(xy => {
         seq++
+        if (seq === 1) {
+          this.codFor = xy.cod
+          this.lojaFor = xy.loja
+          this.nomeFor = xy.nomefor
+        }
+        
         this.arrAtuprecoTab.push({
           'seq': seq,
-          'origem': xy.origem,
-          'filial': xy.filial,
           'cod': xy.cod,
           'loja': xy.loja,
-          'nome': xy.nome,
-          'grupo': xy.grupo,
+          'nomefor': xy.nomefor,
           'produto': xy.produto,
-          'nomproduto': xy.nomproduto,
+          'nomeprod': xy.nomeprod,
           'codfor': xy.codfor,
           'preco': xy.preco,
-          'diaenv': xy.diaenv,
-          'horenv': xy.horenv,
+          'idcod': xy.idcod,
+
+
         })
       });
       this.dataSource = new MatTableDataSource(this.arrAtuprecoTab)
@@ -100,7 +107,8 @@ export class AtuprecoComponent implements OnInit {
   }
   enableEditUser(e, i) {
     this.enableEditIndex = i;
-    // (<HTMLInputElement>(document.getElementById("editQtd"))).focus()
+    (<HTMLInputElement>(document.getElementById("editPreco"))).focus();
+    // (<HTMLInputElement>(document.getElementById("editCodFor"))).focus()
     console.log(i, e)
   }
   btnEditDisable(aRow) {

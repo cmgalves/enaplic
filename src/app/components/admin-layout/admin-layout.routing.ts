@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { SignInComponent } from '../../components/login/sign-in/sign-in.component';
-import { ForgotPasswordComponent } from '../../components/login/forgot-password/forgot-password.component';
 import { UsuarioComponent } from '../../atualizar/cadastros/usuarios/usuario.component';
 import { AuthGuard } from '../../components/login/shared/guard/auth.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';

@@ -8,64 +8,22 @@
                         <!-- <p class="card-category">Complete your usuario</p> -->
                     </div>
                     <div class="row">
-                        <div class="card-body table-responsive col-md-1">
+                        <div class="card-body table-responsive col-md-3">
                             <mat-form-field>
-                                <mat-label>Filial</mat-label>
-                                <input matInput [(ngModel)]="opFilial" disabled>
+                                <mat-label>Código</mat-label>
+                                <input matInput [(ngModel)]="codFor" disabled>
                             </mat-form-field>
                         </div>
                         <div class="card-body table-responsive col-md-2">
                             <mat-form-field>
-                                <mat-label>Ordem de Produção</mat-label>
-                                <input matInput [(ngModel)]="opCodigo" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Produto Acabado</mat-label>
-                                <input matInput [(ngModel)]="opProduto" disabled>
+                                <mat-label>Loja</mat-label>
+                                <input matInput [(ngModel)]="lojaFor" disabled>
                             </mat-form-field>
                         </div>
                         <div class="card-body table-responsive col-md-7">
                             <mat-form-field>
-                                <mat-label>Descrição</mat-label>
-                                <input matInput [(ngModel)]="opDescricao" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Quantidade Protheus</mat-label>
-                                <input matInput [(ngModel)]="opQtde" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Qtde PCF</mat-label>
-                                <input matInput [(ngModel)]="opQtdePcf" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Retrabalho</mat-label>
-                                <input matInput [(ngModel)]="opRetrabalho" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Horas</mat-label>
-                                <input matInput [(ngModel)]="opHoras" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Data Emissao</mat-label>
-                                <input matInput [(ngModel)]="opEmissao" disabled>
-                            </mat-form-field>
-                        </div>
-                        <div class="card-body table-responsive col-md-2">
-                            <mat-form-field>
-                                <mat-label>Data Finalização</mat-label>
-                                <input matInput [(ngModel)]="opFinal" disabled>
+                                <mat-label>Nome Fornecedor</mat-label>
+                                <input matInput [(ngModel)]="nomeFor" disabled>
                             </mat-form-field>
                         </div>
                     </div>
@@ -103,37 +61,29 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> seq </th>
                                     <td mat-cell *matCellDef="let row"> {{row.seq}} </td>
                                 </ng-container>
-                                <ng-container matColumnDef="grupo">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.grupo}} </td>
-                                </ng-container>
                                 <ng-container matColumnDef="produto">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Produto </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> produto </th>
                                     <td mat-cell *matCellDef="let row"> {{row.produto}} </td>
                                 </ng-container>
-                                <ng-container matColumnDef="nomproduto">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Desc Produto </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.nomproduto}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="codfor">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod Fornec </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.codfor}} </td>
+                                <ng-container matColumnDef="nomeprod">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> nomeprod </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.nomeprod}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="preco">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço informado </th>
                                     <td mat-cell *matCellDef="let row; let i = index">
                                         <p *ngIf='enableEditIndex!=i'>{{row.preco}}</p>
-                                        <input ng-maxlength="20" type='text' value={{row.preco}} class="editQtd"
-                                            id="editQtd" *ngIf='enableEditIndex==i'>
+                                        <input ng-maxlength="20" type='text' value={{row.preco}} class="editPreco"
+                                            id="editPreco" *ngIf='enableEditIndex==i'>
                                     </td>
                                 </ng-container>
-                                <ng-container matColumnDef="diaenv">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Dia </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.diaenv}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="horenv">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
-                                    <td mat-cell *matCellDef="let row"> {{row.horenv}} </td>
+                                <ng-container matColumnDef="codfor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod Fornec </th>
+                                    <td mat-cell *matCellDef="let row; let i = index">
+                                        <p *ngIf='enableEditIndex!=i'>{{row.codfor}}</p>
+                                        <input ng-maxlength="20" type='text' value={{row.codfor}} class="editCodFor"
+                                            id="editCodFor" *ngIf='enableEditIndex==i'>
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="edicao">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Edição </th>
