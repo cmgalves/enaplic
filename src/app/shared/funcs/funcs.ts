@@ -42,6 +42,18 @@ export class fxJson {
 
   }
 
+  execJsonPost(_url, obj) {
+    let url = '';
+    const dstUrla = ['186.201.13.178:1278'];
+
+    url = `http://${dstUrla}/${_url}`
+
+    $.ajaxSetup({ async: false });
+
+    $.post(url, obj);
+
+  }
+
   // busca883(_url, obj) {
   //   let url = '';
   //   const dstUrla = ['10.3.0.48:883'];

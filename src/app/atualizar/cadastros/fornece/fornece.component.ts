@@ -66,6 +66,8 @@ export class ForneceComponent implements OnInit {
           'loja': xy.loja,
           'nome': xy.nome,
           'nreduz': xy.nreduz,
+          'email': xy.email,
+          'contato': xy.contato,
           'cnpj': xy.cnpj,
           'cidade': xy.cidade,
           // ['filial', 'cod', 'loja', 'nome', 'nreduz', 'cnpj', 'cidade'];

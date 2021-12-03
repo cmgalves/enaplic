@@ -27,8 +27,10 @@ export interface cadAtupreco {
 export class AtuprecoComponent implements OnInit {
   arrUserLogado = JSON.parse(localStorage.getItem('user'))[0];
   arrAtupreco: any = [];
+  arrAtuFornec: any = [];
   arrAtuprecoTab: any = [];
   arrUsr: any = [];
+  enableEdit: boolean = false;
   enableEditIndex = null;
   idCod = location.hash.substring(18);
   codFor: string = '';
@@ -52,6 +54,22 @@ export class AtuprecoComponent implements OnInit {
     this.buscaAtuprecos();
   }
 
+  atuFornec(aRow) {
+    let valPreco = (<HTMLInputElement>(document.getElementById("editPreco"))).value.replace(',', '.')
+    let codFornec = (<HTMLInputElement>(document.getElementById("editCodFor"))).value
+    const obj = {
+      'codProd': aRow.produto,
+      'valPreco': valPreco,
+      'codFornec': codFornec,
+      'codId': this.idCod,
+    };
+
+    this.funcJson.execJsonPost('atuFornecProd', obj);
+    this.enableEdit = false;
+    this.enableEditIndex = null;
+    window.location.reload();
+  }
+
   buscaAtuprecos() {
     let seq = 0;
     const obj = {
@@ -67,7 +85,7 @@ export class AtuprecoComponent implements OnInit {
           this.lojaFor = xy.loja
           this.nomeFor = xy.nomefor
         }
-        
+
         this.arrAtuprecoTab.push({
           'seq': seq,
           'cod': xy.cod,

@@ -59,25 +59,14 @@ export class MontalistaComponent implements OnInit {
   }
 
   envLista(){
-    let tst = [];
     const obj = {
       'codFor': this.arrFornecDados.cod,
       'codLoja': this.arrFornecDados.loja,
-      'codGrupo': this.grupoSelec,
-      'tipo': 'B',
+      'codGrupo': this.grupoSelec
     };
-    this.arrAtulista = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
-    this.arrAtulista.subscribe(cada => {
-      cada.forEach(xy => {
-        tst.push({
-          'grupo': 'xy.grupo',
-        })
-      });
-      this.arrMontalistaTab = [];
-      this.buscaMontalistas();
-      alert('Envio OK!')
-    });
-    
+    this.funcJson.execJsonPost('geraListaFornecProd', obj);
+    alert('envio ok')
+    window.location.reload();
   }
 
   buscaGrupos() {
@@ -128,7 +117,6 @@ export class MontalistaComponent implements OnInit {
       'codFor': this.arrFornecDados.cod,
       'codLoja': this.arrFornecDados.loja,
       'codGrupo': this.grupoSelec,
-      'tipo': 'A',
     };
     this.arrMontalista = this.funcJson.buscaJsonPost('amarraFornecProduto', obj);
 

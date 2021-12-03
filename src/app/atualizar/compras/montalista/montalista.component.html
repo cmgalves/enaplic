@@ -8,7 +8,7 @@
                         <!-- <p class="card-category">Complete your usuario</p> -->
                     </div>
                     <div class="row">
-                        <div class="card-body table-responsive col-md-2">
+                        <div class="card-body table-responsive col-md-1">
                             <mat-form-field>
                                 <mat-label>Código</mat-label>
                                 <input matInput [(ngModel)]="arrFornecDados.cod" disabled>
@@ -20,10 +20,22 @@
                                 <input matInput [(ngModel)]="arrFornecDados.loja" disabled>
                             </mat-form-field>
                         </div>
-                        <div class="card-body table-responsive col-md-6">
+                        <div class="card-body table-responsive col-md-4">
                             <mat-form-field>
                                 <mat-label>Nome Fornecedor</mat-label>
                                 <input matInput [(ngModel)]="arrFornecDados.nome" disabled>
+                            </mat-form-field>
+                        </div>
+                        <div class="card-body table-responsive col-md-2">
+                            <mat-form-field>
+                                <mat-label>Contato</mat-label>
+                                <input matInput [(ngModel)]="arrFornecDados.contato" >
+                            </mat-form-field>
+                        </div>
+                        <div class="card-body table-responsive col-md-4">
+                            <mat-form-field>
+                                <mat-label>Email</mat-label>
+                                <input matInput [(ngModel)]="arrFornecDados.email" >
                             </mat-form-field>
                         </div>
                         <div class="card-body table-responsive col-md-3">
@@ -41,7 +53,7 @@
                                 <input matInput [(ngModel)]="itensSelec" disabled>
                             </mat-form-field>
                         </div>
-                        <div class="card-body table-responsive col-md-10">
+                        <div class="card-body table-responsive col-md-7">
                             <mat-form-field>
                                 <mat-label>Grupos Selecionados</mat-label>
                                 <input matInput [(ngModel)]="grupoSelec" disabled>
