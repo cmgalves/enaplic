@@ -114,7 +114,7 @@
                                     <td mat-cell *matCellDef="let row"> {{row.grupo}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="edicao">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Edição </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
                                     <td mat-cell *matCellDef="let row; let i = index;">
                                         <button (click)='setItem(row)' mat-raised-button type='button'
                                             class="btn btn-primary btn-link btn-sm btn-just-icon">
@@ -131,11 +131,11 @@
                                     <td mat-cell *matCellDef="let row"> {{row.nomproduto}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="idcod">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> IDCOD </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> codigo Id </th>
                                     <td mat-cell *matCellDef="let row"> {{row.idcod}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="itSel">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> itSel </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Selec </th>
                                     <td mat-cell *matCellDef="let row"> {{row.itSel}} </td>
                                 </ng-container>
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
