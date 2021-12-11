@@ -36,3 +36,10 @@ table {
 .textoVermelho {
     color: DarkSalmon
 }
+.selNao {
+    background: rgb(235, 210, 164)
+}
+
+.selSim {
+    background: rgb(134, 153, 194)
+}

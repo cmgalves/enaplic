@@ -39,7 +39,7 @@ export class AtuprecoComponent implements OnInit {
 
   ftuprecos: Observable<any>;
   // displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'codfor', 'diaenv', 'horenv'];
-  displayedColumns: string[] = ['seq', 'produto', 'nomeprod', 'preco', 'codfor', 'edicao'];
+  displayedColumns: string[] = ['seq', 'produto', 'nomeprod', 'diaenv', 'horaenv', 'diaret', 'horaenv', 'preco', 'codfor', 'edicao'];
   dataSource: MatTableDataSource<cadAtupreco>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -95,6 +95,10 @@ export class AtuprecoComponent implements OnInit {
           'nomeprod': xy.nomeprod,
           'codfor': xy.codfor,
           'preco': xy.preco,
+          'diaenv': xy.diaenv,
+          'horaenv': xy.horaenv,
+          'diaret': xy.diaret,
+          'horaret': xy.horaret,
           'idcod': xy.idcod,
 
 

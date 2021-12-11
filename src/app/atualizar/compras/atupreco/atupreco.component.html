@@ -69,6 +69,22 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> nomeprod </th>
                                     <td mat-cell *matCellDef="let row"> {{row.nomeprod}} </td>
                                 </ng-container>
+                                <ng-container matColumnDef="diaenv">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> diaenv </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.diaenv}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="horaenv">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> horaenv </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.horaenv}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="diaret">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> diaret </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.diaret}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="horaret">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> horaret </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.horaret}} </td>
+                                </ng-container>
                                 <ng-container matColumnDef="preco">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço informado </th>
                                     <td mat-cell *matCellDef="let row; let i = index">

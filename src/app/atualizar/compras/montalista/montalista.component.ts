@@ -35,10 +35,13 @@ export class MontalistaComponent implements OnInit {
   enableEditIndex = null;
   grupoSelec: string = '';
   grupoProd: string = '';
+  itemSelec: string = '';
+  mailFornec: string = JSON.parse(localStorage.getItem('fornecDados'))[0].email;
+  contatoFornec: string = JSON.parse(localStorage.getItem('fornecDados'))[0].contato;
   itensSelec: any;
 
   ftuprecos: Observable<any>;
-  displayedColumns: string[] = ['seq', 'grupo', 'produto', 'nomproduto', 'idcod'];
+  displayedColumns: string[] = ['seq', 'grupo', 'edicao', 'produto', 'nomproduto', 'idcod', 'itSel'];
   dataSource: MatTableDataSource<cadMontalista>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -58,15 +61,40 @@ export class MontalistaComponent implements OnInit {
     this.buscaGrupos();
   }
 
-  envLista(){
+  envLista() {
+    const xcContato = this.contatoFornec
+    const xcEmail = this.mailFornec
     const obj = {
       'codFor': this.arrFornecDados.cod,
       'codLoja': this.arrFornecDados.loja,
-      'codGrupo': this.grupoSelec
+      'codGrupo': this.grupoSelec,
+      'xcEmail': xcEmail,
+      'xcContato': xcContato,
     };
-    this.funcJson.execJsonPost('geraListaFornecProd', obj);
-    alert('envio ok')
-    window.location.reload();
+    if (this.grupoSelec !== '') {
+      this.funcJson.execJsonPost('geraListaFornecProd', obj);
+      alert('envio ok')
+      window.location.reload();
+    } else {
+      alert('Nenhum Grupo Selecionado!')
+    }
+
+  }
+
+  // marcação e limpeza dos itens na lista para os fornecedores
+  itensMarca(xnTipo) {
+    if (xnTipo === 0) {
+      this.itemSelec = ''
+
+    }
+    if (xnTipo === 1) {
+      this.arrMontalistaTab.forEach(xx => {
+        this.itemSelec = this.itemSelec + '|' + xx.produto
+      });
+    }
+
+    this.arrMontalistaTab = [];
+    this.buscaMontalistas();
   }
 
   buscaGrupos() {
@@ -94,10 +122,10 @@ export class MontalistaComponent implements OnInit {
     } else {
 
       if (this.grupoSelec.indexOf(this.grupoProd) < 0) {
-        this.grupoSelec = this.grupoSelec + ' - ' + this.grupoProd
+        this.grupoSelec = this.grupoSelec + '|' + this.grupoProd
       } else {
-        if (this.grupoSelec.indexOf(' - ' + this.grupoProd) > -1) {
-          this.grupoSelec = this.grupoSelec.replace(' - ' + this.grupoProd, '')
+        if (this.grupoSelec.indexOf('|' + this.grupoProd) > -1) {
+          this.grupoSelec = this.grupoSelec.replace('|' + this.grupoProd, '')
         } else {
           this.grupoSelec = this.grupoSelec.replace(this.grupoProd, '')
         }
@@ -113,6 +141,7 @@ export class MontalistaComponent implements OnInit {
 
   buscaMontalistas() {
     let seq = 0;
+    let itSel = '';
     const obj = {
       'codFor': this.arrFornecDados.cod,
       'codLoja': this.arrFornecDados.loja,
@@ -122,6 +151,11 @@ export class MontalistaComponent implements OnInit {
 
     this.arrMontalista.subscribe(cada => {
       cada.forEach(xy => {
+        if (this.itemSelec.indexOf(xy.produto) < 0) {
+          itSel = 'Sim'
+        } else {
+          itSel = 'Não'
+        }
         seq++
         this.arrMontalistaTab.push({
           'seq': seq,
@@ -138,6 +172,7 @@ export class MontalistaComponent implements OnInit {
           'diaenv': xy.diaenv,
           'horenv': xy.horenv,
           'idcod': xy.idcod,
+          'itSel': itSel,
         })
       });
       this.dataSource = new MatTableDataSource(this.arrMontalistaTab)
@@ -164,14 +199,30 @@ export class MontalistaComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  enableEditUser(e, i) {
-    this.enableEditIndex = i;
-    // (<HTMLInputElement>(document.getElementById("editQtd"))).focus()
-    console.log(i, e)
+  setItem(xaRow) {
+    if (this.itemSelec === '') {
+      this.itemSelec = xaRow.produto
+    } else {
+
+      if (this.itemSelec.indexOf(xaRow.produto) < 0) {
+        this.itemSelec = this.itemSelec + '|' + xaRow.produto
+      } else {
+        if (this.itemSelec.indexOf('|' + xaRow.produto) > -1) {
+          this.itemSelec = this.itemSelec.replace('|' + xaRow.produto, '')
+        } else {
+          this.itemSelec = this.itemSelec.replace(xaRow.produto, '')
+        }
+      }
+    }
+    if (this.itemSelec.substring(0, 1) === ' ') {
+      this.itemSelec = this.itemSelec.substring(3, 101)
+    }
+
+    this.arrMontalistaTab = [];
+    this.buscaMontalistas();
+
   }
-  btnEditDisable(aRow) {
-    return aRow.SITUACA === 'A'
-  }
+
   // tecla para retorno de tela
   voltaFornec() {
     this.router.navigate(['fornecedor']);
